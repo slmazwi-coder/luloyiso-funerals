@@ -8,7 +8,7 @@ type Language = 'en' | 'xh'
 type PriceMode = 'head' | 'full' | 'slab'
 
 const services = ['Coffins & caskets', 'Décor', 'Tents', 'Chairs', 'Tombstones', 'Video', 'P.A. system', 'Transport services', 'Lowering device', 'Funeral programmes']
-const xhosa = { services: 'Iinkonzo zethu', scheme: 'Isicwangciso sokungcwaba', tombstones: 'Amatye engcwaba', contact: 'Qhagamshelana nathi' }
+const xhosa = { services: 'Iinkonzo zethu', scheme: 'Isicwangciso sokungcwaba', tombstones: 'Amatye engcwaba', coffins: 'Iibhokisi', contact: 'Qhagamshelana nathi' }
 
 function money(value: number | null) { return value === null ? 'Price on request' : `R ${value.toLocaleString('en-ZA').replace(/,/g, ' ')}` }
 function priceFor(item: typeof tombstones[number], mode: PriceMode) { if (mode === 'head') return item.headBase; if (item.fullSet === null) return null; return mode === 'slab' ? item.fullSet + SLAB_PRICE : item.fullSet }
@@ -48,13 +48,13 @@ export default function Page() {
 
   const selected = tombstones.filter((item) => shortlist.includes(item.code))
   const selectedTotal = selected.reduce((sum, item) => sum + (priceFor(item, mode) ?? 0), 0)
-  const label = language === 'en' ? { services: 'Our services', scheme: 'Burial scheme', tombstones: 'Tombstone catalogue', contact: 'Contact us' } : xhosa
+  const label = language === 'en' ? { services: 'Our services', scheme: 'Burial scheme', tombstones: 'Tombstone catalogue', coffins: 'Coffin catalogue', contact: 'Contact us' } : xhosa
 
   function toggleShortlist(code: string) { setShortlist((items) => items.includes(code) ? items.filter((item) => item !== code) : [...items, code]) }
   function sendShortlist() { whatsapp(whatsappNumbers[0], `Hi Luloyiso, please quote me for: ${selected.map((item) => `${item.code} (${item.size ?? 'size on request'}) — ${money(priceFor(item, mode))}`).join('; ')}. Total guide: ${money(selectedTotal)}.`) }
 
   return <div className="site-shell">
-    <header className="site-header"><a href="#top" className="brand"><Image className="brand-logo" src={logoUrl} alt="Luloyiso Funeral Services logo" width={150} height={72} priority /></a><nav className={menuOpen ? 'nav-links open' : 'nav-links'}>{[['/services', label.services], ['/scheme', label.scheme], ['/tombstones', label.tombstones], ['/contact', label.contact]].map(([href, text]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{text}</a>)}<div className="nav-footer-logo"><Image src={logoUrl} alt="Luloyiso Funeral Services" width={135} height={52} /></div></nav><div className="header-actions"><button className="lang-button" onClick={() => setLanguage(language === 'en' ? 'xh' : 'en')}>{language === 'en' ? 'isiXhosa' : 'English'}</button><a className="header-call" href="tel:+27739482146">Call now</a><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Open menu">☰</button></div></header>
+    <header className="site-header"><a href="#top" className="brand"><Image className="brand-logo" src={logoUrl} alt="Luloyiso Funeral Services logo" width={150} height={72} priority /></a><nav className={menuOpen ? 'nav-links open' : 'nav-links'}>{[['/services', label.services], ['/scheme', label.scheme], ['/tombstones', label.tombstones], ['/coffins', label.coffins], ['/contact', label.contact]].map(([href, text]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{text}</a>)}<div className="nav-footer-logo"><Image src={logoUrl} alt="Luloyiso Funeral Services" width={135} height={52} /></div></nav><div className="header-actions"><button className="lang-button" onClick={() => setLanguage(language === 'en' ? 'xh' : 'en')}>{language === 'en' ? 'isiXhosa' : 'English'}</button><a className="header-call" href="tel:+27739482146">Call now</a><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Open menu">☰</button></div></header>
 
     <main id="top">
       <section className="hero"><div className="hero-copy"><p className="eyebrow">A dignified farewell, lovingly arranged</p><h1>Dignified farewells, with care you can trust.</h1><p className="hero-text">Coffins, décor, tents, chairs, tombstones, video & P.A. system, and more — serving Matatiele and surrounding communities.</p><div className="hero-actions"><a className="button primary" href="tel:+27739482146">Call now</a><button className="button secondary" onClick={() => whatsapp(whatsappNumbers[0], 'Hello Luloyiso, I would like to enquire about your funeral services.')}>WhatsApp us</button><a className="text-link" href="#tombstones">View tombstone prices <span>→</span></a></div><p className="scripture">“Indumiso 34:18 — Uyehova usondele kwabaphukileyo ntliziyo zaphukileyo.”</p></div><div className="hero-visual"><Image src={buildingPhotoUrl} alt="Luloyiso Funeral Services building in Matatiele" fill priority sizes="(max-width: 800px) 100vw, 50vw" /></div></section>
