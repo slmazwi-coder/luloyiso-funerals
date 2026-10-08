@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "regions": ["jnb1"],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "luloyisofunerals.co.za" }],
+      "destination": "https://www.luloyisofunerals.co.za/$1",
+      "permanent": true
+    }
+  ]
+}
