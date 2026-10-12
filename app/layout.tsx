@@ -3,9 +3,11 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://luloyisofunerals.co.za'), // added
   title: 'Luloyiso Funeral Services | Matatiele | Funeral Services, Tombstones & Burial Scheme',
   description: 'Luloyiso Funeral Services provides dignified funeral services, tombstones and burial scheme support in Matatiele and surrounding communities.',
   generator: 'v0.app',
+  verification: { google: '4wgF_diUqq-mFcvo4r4EOkuKrP7fNOioblovFnIbVfk' }, // added
   openGraph: {
     title: 'Luloyiso Funeral Services | Matatiele',
     description: 'Dignified farewells, with care you can trust.',
@@ -38,11 +40,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-ZA"> {/* changed from "en" */}
       <body className="antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
+}
 }
